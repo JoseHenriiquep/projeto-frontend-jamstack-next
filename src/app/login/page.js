@@ -4,59 +4,40 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import Head from "next/head";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { auth } from "../firebase";
 import { useRouter } from "next/navigation";
+import Spinner from "@/components/Spinner";
 
-export default function Register() {
+export default function Login() {
   
   const router = useRouter();
 
-  const [error, setError] = useState('')
-  const [user, setUser] = useState({  
-    id: "",
-    email: "",
-    password: ""
-  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-  })
-  
-  const userLogin = () => {
-    signInWithEmailAndPassword(auth, formData.email, formData.password)
-      .then(async (credentials) => {
-        setUser((obj) => {
-          const result = {
-            ...obj,
-            ["id"]: credentials.user.uid,
-            ["email"]: credentials.user.email
-          }
-          return result;
-        })
-      })
-      .catch((err) => {
-        console.log(`${err.code} = ${err.message}`);
-        setError("Login inválido");
-      })
-  }
+  });
 
-  const handleLogin = (e) => {
+  async function handleLogin(e) {
     e.preventDefault();
-    userLogin();
-  }
+    setLoading(true);
+    setError('');
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: { 'Content-Type': 'application/json' }
+    });
 
-  useEffect(() => {
-    if (user.id.length && user.email) {
-      alert("Login Efetuado com Sucesso!");
-      setUser({ id: "", email: "", password: "" });
-      router.replace("/");
+    if (response.ok) {
+      router.refresh();
+      router.push('/products');
+      setLoading(false)
+    } else {
+      const data = await response.json();
+      setError(data.error);
+      setLoading(false);
     }
-    if (error) {
-      alert(error);
-      setError('');
-      return;
-    }
-  }, [user, error]);
+  }
 
   return(
     <div>
@@ -65,7 +46,7 @@ export default function Register() {
       </Head>
       <div className="flex justify-center items-center flex-col h-screen">
         <form className="flex flex-col gap-4 w-100 bg-purple-500 rounded-xl p-10 border-2" onSubmit={handleLogin}>
-          <h1 className="text-center">Registre-se</h1>
+          <h1 className="text-center">Login</h1>
           <label htmlFor='email'>Email:</label>
           <input 
             className="border-2 border-solid rounded-lg p-1"
@@ -84,11 +65,13 @@ export default function Register() {
             value={formData.password}
             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
           />
-          <p>Não tem uma conta? <Link href="/register">Cadastre-se</Link></p>
+          {error && <span className="text-gray-950 text-sm">{error}</span>}
+          <p>Não tem uma conta? <Link href='/register'>Cadastre-se</Link></p>
           <button
-            className="border-2 border-solid rounded-lg p-2"
+            disabled={loading}
+            className="sign border-2 border-solid rounded-lg p-2"
           >
-            Entrar
+            {loading ? <Spinner/> : 'Entrar'}
           </button>
         </form>
       </div>

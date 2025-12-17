@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
-    <footer>
-      <h1>FOOTER</h1>
+    <footer className="bg-purple-500 w-screen p-3 flex justify-center items-center">
+      <h1>&copy; JoseHenriiquep</h1>
     </footer>
   )
 }

@@ -4,11 +4,11 @@ body {
   background-color: rgb(94, 34, 150);
 }
 
-p, h1, form, label, input, button {
+p, h1, form, label, input, button, nav {
   color: #fff;
 }
 
-button:hover {
+button.sign:hover {
   background-color: #fff;
   color: #000;
   border: 2px solid #fff;

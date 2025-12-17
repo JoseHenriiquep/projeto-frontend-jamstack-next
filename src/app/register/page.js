@@ -1,9 +1,11 @@
+'use client'
+
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import Head from "next/head";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { auth } from "../firebase";
+import { auth } from "../../lib/firebase";
+import Link from "next/link";
 
 export default function Register() {
 
@@ -31,7 +33,7 @@ export default function Register() {
       createUserWithEmailAndPassword(auth, formData.email, formData.password);
       alert('Usuário cadastrado com sucesso!')
       setFormData({ name: '', email: '', password: '', confirmPassword: ''})
-      router.replace("/login");
+      router.push("/login");
     }
   }
 
@@ -87,9 +89,9 @@ export default function Register() {
             onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
           />
           {errors.confirmPassword && <span className="text-red-500">{errors.confirmPassword}</span>}
-          <p>Já tem uma conta? <Link href="/login">Entrar</Link></p>
+          <p>Já tem uma conta? <Link href='/login'>Entrar</Link></p>
           <button 
-            className="border-2 border-solid rounded-lg p-2"
+            className="sign border-2 border-solid rounded-lg p-2"
           >
             Registrar
           </button>
