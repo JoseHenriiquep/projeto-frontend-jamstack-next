@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+body {
+  background-color: rgb(94, 34, 150);
+}
+
+p, h1, form, label, input, button {
+  color: #fff;
+}
+
+button:hover {
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #fff;
+  transition: 0.1s ease-in;
+  cursor: pointer
+}
