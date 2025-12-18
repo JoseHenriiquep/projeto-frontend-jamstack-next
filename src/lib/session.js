@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { admin } from './firebaseAdmin';
 
 export async function createSession(idToken) {
-  const expiresIn = 60 * 60 * 24 * 5 * 1000;
+  const expiresIn = 30 * 60 * 1000;
 
   const sessionCookie = await admin
     .auth()
