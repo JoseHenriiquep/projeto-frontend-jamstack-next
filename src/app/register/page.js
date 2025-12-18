@@ -47,7 +47,7 @@ export default function Register() {
         <title>Register</title>
       </Head>
       <div className="flex justify-center items-center flex-col h-screen">
-        <form className="flex flex-col gap-4 w-100 bg-purple-500 rounded-xl p-10 border-2" onSubmit={handleRegister}>
+        <form className="flex flex-col gap-4 w-full max-w-[320px] sm:max-w-[375px] md:max-w-[420px] bg-purple-500 rounded-xl p-10 border-2" onSubmit={handleRegister}>
           <h1 className="text-center">Registre-se</h1>
           <label htmlFor='name'>Nome:</label>
           <input 

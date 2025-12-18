@@ -30,7 +30,7 @@ export default function Login() {
 
     if (response.ok) {
       router.refresh();
-      router.push('/products');
+      router.push('/');
       setLoading(false)
     } else {
       const data = await response.json();
@@ -45,7 +45,7 @@ export default function Login() {
         <title>Login</title>
       </Head>
       <div className="flex justify-center items-center flex-col h-screen">
-        <form className="flex flex-col gap-4 w-100 bg-purple-500 rounded-xl p-10 border-2" onSubmit={handleLogin}>
+        <form className="flex flex-col gap-4 w-full max-w-[320px] sm:max-w-[375px] md:max-w-[420px] bg-purple-500 rounded-xl p-10 border-2" onSubmit={handleLogin}>
           <h1 className="text-center">Login</h1>
           <label htmlFor='email'>Email:</label>
           <input 
