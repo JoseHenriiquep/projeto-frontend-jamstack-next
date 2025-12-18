@@ -39,3 +39,22 @@ export async function verifySession() {
     return null;
   }
 }
+
+export async function getCurrentUser() {
+  const cookieStore = await cookies();
+  const session = cookieStore.get('session')?.value;
+  if (!session) return null;
+
+  const decoded = await admin.auth().verifySessionCookie(session);
+  const user = await admin.firestore()
+    .collection('users')
+    .doc(decoded.uid)
+    .get();
+  
+  if (!user.exists) return null 
+
+  return {
+    uid: decoded.uid,
+    ...user.data(),
+  };
+}
