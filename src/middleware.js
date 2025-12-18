@@ -8,7 +8,7 @@ export function middleware(req) {
   }
 
   if (session && req.nextUrl.pathname === '/login') {
-    return NextResponse.redirect(new URL('/products', req.url));
+    return NextResponse.redirect(new URL('/', req.url));
   }
 
   return NextResponse.next();
