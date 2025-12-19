@@ -1,5 +1,6 @@
 import { createSchema, createYoga } from "graphql-yoga";
 import { db } from "@/lib/firebaseAdmin";
+import { getProductByIdFromDb, getProductsFromDB } from "@/lib/products";
 
 const yoga = createYoga({
   schema: createSchema({
@@ -19,23 +20,8 @@ const yoga = createYoga({
     `,
     resolvers: {
       Query: {
-        products: async (_, __, ctx) => {
-          const products = await ctx.db.collection('products').get();
-          return products.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-        },
-        product: async (_, { id }, ctx) => {
-          const product = await ctx.db.collection("products").doc(id).get();
-
-          if (!product.exists) return null;
-
-          return {
-            id: product.id,
-            ...product.data(),
-          };
-        },
+        products: async () => getProductsFromDB(),
+        product: async () => getProductByIdFromDb(),
       },
     },
   }),

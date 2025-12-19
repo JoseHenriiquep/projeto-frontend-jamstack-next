@@ -2,7 +2,7 @@ import AppLayout from "@/components/AppLayout";
 import { GraphQLClient } from "graphql-request";
 import { unstable_cache } from "next/cache";
 
-const client = new GraphQLClient("http://localhost:3000/api/products");
+const client = new GraphQLClient("/api/products");
 
 const query = `
   query Product($id: ID!) {
