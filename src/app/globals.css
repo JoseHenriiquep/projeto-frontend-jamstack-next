@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 body {
-  background-color: rgb(94, 34, 150);
+  background-color: #5e2296;
 }
 
-p, h1, form, label, input, button, nav {
+h1, form, label, input, button, nav {
   color: #fff;
 }
 
@@ -14,4 +14,30 @@ button.sign:hover {
   border: 2px solid #fff;
   transition: 0.1s ease-in;
   cursor: pointer
+}
+
+.home-buttons {
+  border: 2px solid #fff;
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+}
+
+.home-buttons:hover {
+  background-color: #fff;
+  color: #000;
+  transition: 0.3s ease;
+}
+
+li {
+  display: flex;
+  border: 2px solid black;
+  padding: 5px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+li:hover {
+  transition: 0.3s ease, box-shadow 0.2s ease;
+  transform: scale(1.03);
 }
