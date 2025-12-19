@@ -45,16 +45,21 @@ export async function getCurrentUser() {
   const session = cookieStore.get('session')?.value;
   if (!session) return null;
 
-  const decoded = await admin.auth().verifySessionCookie(session);
-  const user = await admin.firestore()
-    .collection('users')
-    .doc(decoded.uid)
-    .get();
+  try {
+    const decoded = await admin.auth().verifySessionCookie(session, true);
+    const user = await admin.firestore()
+      .collection('users')
+      .doc(decoded.uid)
+      .get();
+    
+    if (!user.exists) return null 
   
-  if (!user.exists) return null 
-
-  return {
-    uid: decoded.uid,
-    ...user.data(),
-  };
+    return {
+      uid: decoded.uid,
+      ...user.data(),
+    };
+    
+  } catch (error) {
+    return null;
+  }
 }
