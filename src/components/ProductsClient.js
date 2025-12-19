@@ -1,10 +1,8 @@
 'use client'
 import AppLayout from "@/components/AppLayout";
-import { GraphQLClient } from "graphql-request";
+import { getGraphQLClient } from "@/lib/graphqlClient";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
-export const client = new GraphQLClient("/api/products")
 
 const query = `
   query {
@@ -22,7 +20,7 @@ export default function ProductsClient({ initialProducts }) {
   const [products, setProducts] = useState(initialProducts);
 
   useEffect(() => {
-    new GraphQLClient("/api/products").request(query).then(data => {
+    getGraphQLClient().request(query).then(data => {
       setProducts(data.products);
     });
   }, []);

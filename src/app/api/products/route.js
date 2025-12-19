@@ -1,5 +1,4 @@
 import { createSchema, createYoga } from "graphql-yoga";
-import { db } from "@/lib/firebaseAdmin";
 import { getProductByIdFromDb, getProductsFromDB } from "@/lib/products";
 
 const yoga = createYoga({
@@ -21,14 +20,11 @@ const yoga = createYoga({
     resolvers: {
       Query: {
         products: async () => getProductsFromDB(),
-        product: async () => getProductByIdFromDb(),
+        product: async (_, { id }) => getProductByIdFromDb(id),
       },
     },
   }),
   graphqlEndpoint: "/api/products",
-  context: () => ({
-    db: db
-  })
 })
 
 export { yoga as GET, yoga as POST };

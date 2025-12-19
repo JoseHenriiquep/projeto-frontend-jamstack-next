@@ -1,4 +1,5 @@
 import { db } from "@/lib/firebaseAdmin";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
@@ -49,6 +50,7 @@ export async function POST(req) {
       imageUrl
     });
 
+    revalidatePath('/products');
 
     return NextResponse.json({ success: true });
   } catch (error) {
