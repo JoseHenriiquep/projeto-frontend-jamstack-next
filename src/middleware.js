@@ -3,11 +3,13 @@ import { NextResponse } from "next/server";
 export function middleware(req) {
   const session = req.cookies.get('session');
 
-  if (!session && req.nextUrl.pathname.startsWith('/products')) {
+  const publicPaths = ['/login', '/register'];
+
+  if (!session && !publicPaths.includes(req.nextUrl.pathname)) {
     return NextResponse.redirect(new URL('/login', req.url));
   }
 
-  if (session && req.nextUrl.pathname === '/login') {
+ if (session && publicPaths.includes(req.nextUrl.pathname)) {
     return NextResponse.redirect(new URL('/', req.url));
   }
 
@@ -15,5 +17,5 @@ export function middleware(req) {
 }
 
 export const config = {
-  matcher: ['/products/:path*', '/login'],
+  matcher: ['/', '/login', '/register', '/products/:path*', '/addProducts' ],
 }
