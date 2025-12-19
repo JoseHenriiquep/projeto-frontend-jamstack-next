@@ -1,7 +1,5 @@
 'use client'
 
-import { signInWithEmailAndPassword } from "firebase/auth";
-import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -41,9 +39,6 @@ export default function Login() {
 
   return(
     <div>
-      <Head>
-        <title>Login</title>
-      </Head>
       <div className="flex justify-center items-center flex-col h-screen">
         <form className="flex flex-col gap-4 w-full max-w-[320px] sm:max-w-[375px] md:max-w-[420px] bg-purple-500 rounded-xl p-10 border-2" onSubmit={handleLogin}>
           <h1 className="text-center">Login</h1>
